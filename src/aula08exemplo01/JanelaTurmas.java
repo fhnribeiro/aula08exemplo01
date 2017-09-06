@@ -11,6 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -27,13 +28,16 @@ class JanelaTurmas extends JFrame{
         super("Turmas");
         this.turmas = sampleData;
         lstTurmas.setModel(new TurmasListModel(turmas));
+        lstTurmas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         add(new JScrollPane(lstTurmas),BorderLayout.WEST);
         add(new JScrollPane(lstAlunos),BorderLayout.CENTER);
         lstTurmas.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Turma selecionada = lstTurmas.getSelectedValue();
-                lstAlunos.setModel( new AlunosListModel1(selecionada.getAlunos() ) );
+                if(selecionada != null){
+                    lstAlunos.setModel( new AlunosListModel1(selecionada.getAlunos() ) );
+                }
             }
         });
     }
